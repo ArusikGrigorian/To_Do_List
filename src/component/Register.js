@@ -1,5 +1,4 @@
 import React from "react";
-
 import { db } from "../firebase";
 
 
@@ -32,11 +31,11 @@ class Register extends React.Component {
       .doc(data.uid.toString())
       .set(data)
       .then(() => {
-       
+
         window.location = "/";
       })
       .catch(error => {
-      
+
         this.setState({ isSubmitting: false });
       });
   };
@@ -55,7 +54,7 @@ class Register extends React.Component {
         };
         this.handleValidation(target);
       }
-     
+
       this.setState({ isSubmitting: false });
     }
   };
@@ -105,7 +104,7 @@ class Register extends React.Component {
                   name="name"
                   className={`form-control ${
                     formErrors.name ? "is-invalid" : ""
-                  }`}
+                    }`}
                   placeholder="Enter name"
                   onChange={this.handleChange}
                   value={formValues.name}
@@ -119,7 +118,7 @@ class Register extends React.Component {
                   name="role"
                   className={`form-control ${
                     formErrors.role ? "is-invalid" : ""
-                  }`}
+                    }`}
                   placeholder="Enter role"
                   onChange={this.handleChange}
                   value={formValues.role}
@@ -135,7 +134,7 @@ class Register extends React.Component {
               </button>
             </form>
           </div>
-       
+
         </div>
       </>
     );

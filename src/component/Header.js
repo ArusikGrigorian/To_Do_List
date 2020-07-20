@@ -21,14 +21,14 @@ const blackButtonStyle = {
 }
 
 export default function Header(props) {
-  const onLogoutClick=()=>{
-    auth.signOut().catch(e=>{
+  const onLogoutClick = () => {
+    auth.signOut().catch(e => {
 
       alert(e.message)
     }
 
     )
-      
+
   }
   return (
     <header style={headerStyle}>

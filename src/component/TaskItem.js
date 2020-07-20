@@ -12,7 +12,7 @@ export default class TaskItem extends React.Component {
 
   render() {
     this.done = this.props.task.done;
-    
+
     return (
       <div
         style={{
@@ -31,7 +31,7 @@ export default class TaskItem extends React.Component {
           />
           <span style={{ color: this.context }}>{this.name}</span>
         </div>
-        <button  onClick={() => {
+        <button onClick={() => {
           this.props.onTaskDelete(this.id)
         }} >X</button>
       </div>

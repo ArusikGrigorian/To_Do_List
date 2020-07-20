@@ -5,54 +5,45 @@ import TodoList from "./TodoList";
 // import Search from './Search';
 // import Filter from './Filter';
 import uniqId from 'uniqid';
-
-
-import { db } from '../firebase';
-
-
-
+import { db, auth } from '../firebase';
 
 
 class ToDoApp extends React.Component {
     constructor(props) {
-      
+
         super(props);
         this.state = {
             searchValue: "",
             inputValue: "",
             tasks: [],
-            
+
             filterValue: "all"
         }
     }
-    async componentDidMount() {
-        
-        try {
-            const todoRef = db.collection('todo-items');
-            const collection = await todoRef.get();
-            // console.log(collection.docs); 
-            const tasksFromDb = [];
 
-            collection.docs.forEach(doc => {
-                const task = {
-                    id: doc.id,
-                    ...doc.data()
-                };
-                tasksFromDb.push(task)
-            })
+    async componentDidMount() {
+        try {
+            const todoRef = db.collection('users').doc(auth.currentUser.uid);
+            const collection = await todoRef.get();
+            //     debugger
+            //     const tasksFromDb = [];
+
+            //     collection.docs.forEach(doc => {
+            //         const task = {
+            //             id: doc.id,
+            //             ...doc.data()
+            //         };
+            //         tasksFromDb.push(task)
+            //     })
 
             this.setState({
-                tasks: tasksFromDb
+                tasks: collection.data().toDoItems
             })
 
         } catch (e) {
             //alert(e.message)
         }
-
-
     }
-
-
 
     onFilterChange = (filterValue) => {
         this.setState({
@@ -62,18 +53,24 @@ class ToDoApp extends React.Component {
     handleInput = (e) => {
         this.setState({ searchValue: e.target.value });
     };
+
     handleChange = (e) => {
         this.setState({ inputValue: e.target.value });
     };
+
     handleClick = () => {
         const newData = {
 
             name: this.state.inputValue,
             done: false,
             deleted: false,
+            id: uniqId()
         }
         const id = uniqId();
-        db.collection('todo-items').doc(id).set(newData)
+        db.collection('users').doc(auth.currentUser.uid).update({
+            email: auth.currentUser.email,
+            toDoItems: [...this.state.tasks, newData]
+        })
             .then(() => {
                 const newTasks = [...this.state.tasks];
                 newTasks.push({
@@ -105,7 +102,6 @@ class ToDoApp extends React.Component {
         }).catch(() => alert('can not update'));
 
 
-
     };
     onTaskDelete = (id) => {
         const exactRef = db.collection('todo-items').doc(id).delete()
@@ -124,21 +120,19 @@ class ToDoApp extends React.Component {
 
     };
 
-   
-
 
     render() {
-       
+
         return (
             <>
-            <AddTask handleClick={this.handleClick} handleChange={this.handleChange}
-                inputValue={this.state.inputValue} />
-            {/* <Search handleInput={this.handleInput} searchValue={this.state.searchValue} />
+                <AddTask handleClick={this.handleClick} handleChange={this.handleChange}
+                    inputValue={this.state.inputValue} />
+                {/* <Search handleInput={this.handleInput} searchValue={this.state.searchValue} />
 <Filter onFilterChange={this.onFilterChange} /> */}
-            <TodoList onTaskDelete={this.onTaskDelete} onTaskToggle={this.onTaskToggle}
-                tasks={this.state.tasks} searchValue={this.state.searchValue}
-                filterValue={this.state.filterValue} />
-        </>
+                <TodoList onTaskDelete={this.onTaskDelete} onTaskToggle={this.onTaskToggle}
+                    tasks={this.state.tasks} searchValue={this.state.searchValue}
+                    filterValue={this.state.filterValue} />
+            </>
         );
 
     }

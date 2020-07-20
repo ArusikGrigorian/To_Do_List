@@ -3,11 +3,10 @@ import "../App.css";
 import Header from "./Header";
 import ThemeContext from '../contexts/ThemeContext';
 import { BLACK_THEME_BACKGROUND_COLOR, BLUE_THEME_BACKGROUND_COLOR } from '../constants/style';
-import { auth} from '../firebase';
+import { auth } from '../firebase';
 import UserConstext from '../contexts/UserConstext';
 import LogIn from './LogIn';
 import ToDoApp from './ToDoApp';
-
 
 
 
@@ -20,12 +19,12 @@ class Main extends React.Component {
         }
     }
     async componentDidMount() {
-        auth.onAuthStateChanged((user) =>{
+        auth.onAuthStateChanged((user) => {
             this.setState({
                 user
             })
-          });
-        
+        });
+
     }
     onThemeChange = (color) => {
         if (this.state.theme !== color) {
@@ -46,9 +45,9 @@ class Main extends React.Component {
                         backgroundColor: bgcolor
                     }}>
                         <Header onThemeChange={this.onThemeChange} />
-                        {this.state.user ? <ToDoApp/>: <LogIn/>}
+                        {this.state.user ? <ToDoApp /> : <LogIn />}
                     </div>
-                  
+
                 </ThemeContext.Provider>
             </UserConstext.Provider>
         );

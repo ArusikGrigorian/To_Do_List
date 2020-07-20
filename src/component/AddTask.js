@@ -18,22 +18,22 @@ class AddTask extends React.Component {
             </div>
         )
 
-            // <ThemeContext.Consumer>
-            //     {(value) => {
-            //         const color = value === 'black' ? BLACK_THEME_COLOR : BLUE_THEME_COLOR;
+        // <ThemeContext.Consumer>
+        //     {(value) => {
+        //         const color = value === 'black' ? BLACK_THEME_COLOR : BLUE_THEME_COLOR;
 
-            //         return (
-            //             <div className="AddTask">
-            //                 <h1 style={{ color }}>Things Todo</h1>
-            //                 <div>
-            //                     <input onChange={this.props.handleChange} value={this.props.inputValue} type="text"
-            //                         placeholder="Add task here..." />
-            //                     <button onClick={this.props.handleClick}>Add</button>
-            //                 </div>
-            //             </div>
-            //         )
-            //     }}
-            // </ThemeContext.Consumer>
+        //         return (
+        //             <div className="AddTask">
+        //                 <h1 style={{ color }}>Things Todo</h1>
+        //                 <div>
+        //                     <input onChange={this.props.handleChange} value={this.props.inputValue} type="text"
+        //                         placeholder="Add task here..." />
+        //                     <button onClick={this.props.handleClick}>Add</button>
+        //                 </div>
+        //             </div>
+        //         )
+        //     }}
+        // </ThemeContext.Consumer>
     }
 }
 
